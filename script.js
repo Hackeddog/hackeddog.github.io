@@ -44,8 +44,10 @@ contactForm.addEventListener('submit', (event) => {
     return;
   }
 
-  // GitHub Pages only hosts static files, so this simulates a backend response.
-  // Replace this block with a real API endpoint when you deploy a backend service.
-  formStatus.textContent = `Thanks, ${name}! Your message is ready to send.`;
+  const subject = encodeURIComponent(`Portfolio message from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+
+  window.location.href = `mailto:mickulms.7@gmail.com?subject=${subject}&body=${body}`;
+  formStatus.textContent = `Thanks, ${name}! Your email app should open with the message addressed to mickulms.7@gmail.com.`;
   contactForm.reset();
 });
