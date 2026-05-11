@@ -31,23 +31,6 @@ navLinks.addEventListener('click', (event) => {
   }
 });
 
-contactForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-
-  const formData = new FormData(contactForm);
-  const name = formData.get('name').trim();
-  const email = formData.get('email').trim();
-  const message = formData.get('message').trim();
-
-  if (!name || !email || !message) {
-    formStatus.textContent = 'Please complete all fields before sending.';
-    return;
-  }
-
-  const subject = encodeURIComponent(`Portfolio message from ${name}`);
-  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
-
-  window.location.href = `mailto:mickulms.7@gmail.com?subject=${subject}&body=${body}`;
-  formStatus.textContent = `Thanks, ${name}! Your email app should open with the message addressed to mickulms.7@gmail.com.`;
-  contactForm.reset();
+contactForm.addEventListener('submit', () => {
+  formStatus.textContent = 'Sending your message to mickulms.7@gmail.com...';
 });
