@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portfolio website for a Data Science student at Ateneo de Davao University."
+      content="Francis Micku Lamsin's data science portfolio featuring full-stack analytics, machine learning, SQL, Tableau, Power BI, and Excel dashboard analyses."
     />
-    <title>Portfolio | Data Science Student</title>
+    <title>Francis Micku Lamsin | Data Science Portfolio</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -20,7 +20,7 @@
 
     <header class="site-header">
       <nav class="nav" aria-label="Main navigation">
-        <a class="logo" href="#home">Portfolio</a>
+        <a class="logo" href="#home">Francis Lamsin</a>
         <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">
           ☰
         </button>
@@ -38,15 +38,15 @@
       <section id="home" class="hero section">
         <div class="hero-content">
           <p class="eyebrow">Data Science Student</p>
-          <h1>Hello, I'm <span>Your Name</span>.</h1>
+          <h1>Hello, I'm <span>Francis Micku Lamsin</span>.</h1>
           <p>
-            I am a Data Science student at Ateneo de Davao University, interested in
-            analytics, machine learning, and building useful digital solutions.
+            Data Science student at Ateneo de Davao University passionate about transforming data into meaningful insights. Aspiring Data Analyst and Data Engineer focused on building data-driven solutions, dashboards, and analytical systems that solve real-world problems.
           </p>
           <div class="hero-actions">
-            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn primary" href="#projects">View Full-Stack Project</a>
+            <a class="btn secondary" href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Projects" target="_blank" rel="noopener">GitHub Projects</a>
+            <a class="btn secondary" href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards" target="_blank" rel="noopener">Dashboard Analyses</a>
             <a class="btn secondary" href="FrancisMickuLamsin_Resume.pdf" download>Download Resume</a>
-            <a class="btn secondary" href="#contact">Contact Me</a>
           </div>
         </div>
       </section>
@@ -54,8 +54,11 @@
       <section id="about" class="section card-section">
         <h2>About Me</h2>
         <p>
-          Add a short introduction about your background, goals, and what kind of
-          data science or software projects you enjoy working on.
+          I am a Data Science student at Ateneo de Davao University focused on
+          full-stack analytics, visualization, business intelligence, and machine learning.
+          My work connects Python data preparation, predictive modeling, SQL database design,
+          and Tableau or Power BI dashboards to help decision-makers understand performance,
+          risk, and operational patterns.
         </p>
       </section>
 
@@ -63,44 +66,78 @@
         <h2>Skills</h2>
         <div class="grid">
           <article class="card">
-            <h3>Data Analysis</h3>
-            <p>Python, spreadsheets, data cleaning, visualization, and reporting.</p>
+            <h3>Python & Machine Learning</h3>
+            <p>Pandas preprocessing, feature engineering, scikit-learn modeling, prediction outputs, and reusable model modules.</p>
           </article>
           <article class="card">
-            <h3>Machine Learning</h3>
-            <p>Model training, evaluation, and basic predictive analytics.</p>
+            <h3>SQL & Data Pipelines</h3>
+            <p>SQL schema creation, prediction table design, database-ready outputs, and structured analysis workflows.</p>
           </article>
           <article class="card">
-            <h3>Web Development</h3>
-            <p>HTML, CSS, JavaScript, and responsive portfolio websites.</p>
+            <h3>Business Intelligence</h3>
+            <p>Tableau, Power BI, Excel pivot tables, KPI cards, slicers, trend views, and interactive reporting.</p>
           </article>
         </div>
       </section>
 
       <section id="projects" class="section">
-        <h2>Projects</h2>
+        <div class="section-header">
+          <div>
+            <p class="eyebrow">Connected from GitHub</p>
+            <h2>Full-Stack Analytics & Dashboard Projects</h2>
+          </div>
+          <div class="section-actions">
+            <a class="btn secondary" href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Projects" target="_blank" rel="noopener">Open Projects Folder</a>
+            <a class="btn secondary" href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards" target="_blank" rel="noopener">Open Dashboards Folder</a>
+          </div>
+        </div>
+        <div class="featured-project card project-card">
+          <p class="project-meta">Python • Machine Learning • SQL • Tableau</p>
+          <h3>Absenteeism Analysis — End-to-End Predictive Analytics</h3>
+          <p>
+            Full-stack analytics project that preprocesses absenteeism data in Python, engineers features,
+            applies a saved machine learning model and scaler to predict absence risk, prepares SQL-ready
+            prediction outputs, and connects the results to Tableau for visual analysis.
+          </p>
+          <ul class="tag-list"><li>Python</li><li>Pandas</li><li>scikit-learn</li><li>SQL</li><li>Tableau</li><li>Predictive Modeling</li></ul>
+          <a href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Projects/Absentisim_Analysis" target="_blank" rel="noopener" aria-label="Open Absenteeism Analysis project">View full-stack project →</a>
+        </div>
         <div class="grid">
           <article class="card project-card">
-            <h3>Project One</h3>
-            <p>Describe your data science, dashboard, or programming project here.</p>
-            <a href="#" aria-label="Open Project One">View project →</a>
+            <p class="project-meta">Power BI • Sales Performance</p>
+            <h3>Sales & Profit Performance Dashboard</h3>
+            <p>Interactive single-page report analyzing revenue by salesperson, region, channel, product type, and monthly trends with dynamic slicers.</p>
+            <ul class="tag-list"><li>KPI Cards</li><li>Trend Analysis</li><li>Sales Segmentation</li></ul>
+            <a href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards/Sales-Performance-PowerBI" target="_blank" rel="noopener" aria-label="Open Sales and Profit Performance Dashboard">View analysis →</a>
           </article>
           <article class="card project-card">
-            <h3>Project Two</h3>
-            <p>Describe another project, research output, or school activity here.</p>
-            <a href="#" aria-label="Open Project Two">View project →</a>
+            <p class="project-meta">Excel • Automotive Analytics</p>
+            <h3>Dealer Car Analysis — Southeast Asia</h3>
+            <p>Pivot-based dashboard evaluating sales volume, total revenue, profit, country performance, dealership leaders, and brand efficiency.</p>
+            <ul class="tag-list"><li>Pivot Tables</li><li>Profit Analysis</li><li>Market Comparison</li></ul>
+            <a href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards/Dealers-Car-Analysis" target="_blank" rel="noopener" aria-label="Open Dealer Car Analysis">View analysis →</a>
           </article>
           <article class="card project-card">
-            <h3>Project Three</h3>
-            <p>Add links to GitHub repositories, demos, notebooks, or reports.</p>
-            <a href="#" aria-label="Open Project Three">View project →</a>
+            <p class="project-meta">Power BI • Food & Beverage</p>
+            <h3>Sarpino's Sales Analytics</h3>
+            <p>Four-page Power BI report covering outlet benchmarking, customer segmentation, merchant offer effectiveness, discounts, and revenue trends.</p>
+            <ul class="tag-list"><li>Customer Segmentation</li><li>Offer Analysis</li><li>Revenue Trends</li></ul>
+            <a href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards/Sarpino%27sPizzaria-Analysis" target="_blank" rel="noopener" aria-label="Open Sarpino's Sales Analytics">View analysis →</a>
+          </article>
+          <article class="card project-card">
+            <p class="project-meta">Power BI • Branch Reporting</p>
+            <h3>Branch Sales Performance Analysis</h3>
+            <p>Power BI project file focused on monitoring branch-level sales performance and presenting operational KPIs for quick comparison.</p>
+            <ul class="tag-list"><li>Branch KPIs</li><li>Performance Tracking</li><li>Power BI</li></ul>
+            <a href="https://github.com/Hackeddog/data-science-portfolio/tree/main/Dashboards/Branch-Sale-Performance-Analaysis" target="_blank" rel="noopener" aria-label="Open Branch Sales Performance Analysis">View project →</a>
           </article>
         </div>
       </section>
 
       <section id="contact" class="section card-section">
         <h2>Contact</h2>
-        <p>Interested in collaborating or learning more about my work? Send a message.</p>
+        <p>Interested in collaborating or learning more about my full-stack analytics and dashboard work? Send a message or visit my GitHub portfolio.</p>
+        <p><a class="text-link" href="https://github.com/Hackeddog/data-science-portfolio" target="_blank" rel="noopener">github.com/Hackeddog/data-science-portfolio</a></p>
         <form id="contactForm" class="contact-form">
           <label>
             Name
@@ -121,7 +158,7 @@
     </main>
 
     <footer class="footer">
-      <p>© <span id="year"></span> Your Name. All rights reserved.</p>
+      <p>© <span id="year"></span> Francis Micku Lamsin. All rights reserved.</p>
     </footer>
 
     <script src="script.js"></script>
