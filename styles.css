@@ -1,13 +1,18 @@
 :root {
-  --bg: #0f172a;
-  --surface: #111827;
-  --card: #1f2937;
+  --bg: #050816;
+  --surface: #0b1220;
+  --neon-cyan: #00f5ff;
+  --neon-violet: #9d4edd;
+  --neon-green: #7cffcb;
+  --card: #111827;
   --text: #f8fafc;
   --muted: #cbd5e1;
   --primary: #38bdf8;
   --primary-dark: #0284c7;
-  --border: rgba(255, 255, 255, 0.12);
-  --shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --accent: #a855f7;
+  --glow: #22d3ee;
+  --border: rgba(255, 255, 255, 0.14);
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -21,6 +26,7 @@ html {
 body {
   --scroll-progress: 0;
   --scroll-y: 0px;
+  --scroll-direction: 1;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
@@ -29,58 +35,171 @@ body {
   overflow-x: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(120deg, rgba(56, 189, 248, 0.08), transparent 28%, rgba(168, 85, 247, 0.09) 62%, transparent),
+    #050816;
+}
+
 .scroll-background {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   background:
-    radial-gradient(circle at calc(20% + (var(--scroll-progress) * 55%)) 20%, rgba(56, 189, 248, 0.35), transparent 28%),
-    radial-gradient(circle at calc(80% - (var(--scroll-progress) * 45%)) 70%, rgba(124, 58, 237, 0.32), transparent 30%),
-    linear-gradient(135deg, #0f172a, #172554 48%, #111827);
+    radial-gradient(circle at calc(12% + (var(--scroll-progress) * 66%)) calc(16% + (var(--scroll-progress) * 18%)), rgba(0, 245, 255, 0.42), transparent 24%),
+    radial-gradient(circle at calc(88% - (var(--scroll-progress) * 58%)) calc(72% - (var(--scroll-progress) * 16%)), rgba(157, 78, 221, 0.4), transparent 30%),
+    radial-gradient(circle at 50% calc(100% - (var(--scroll-progress) * 72%)), rgba(124, 255, 203, 0.16), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #061530 38%, #140f2f 72%, #020617 100%);
+}
+
+.scroll-background::before,
+.scroll-background::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+}
+
+.scroll-background::before {
+  background: conic-gradient(from calc(var(--scroll-progress) * 1turn), transparent, rgba(0, 245, 255, 0.18), transparent, rgba(157, 78, 221, 0.18), transparent, rgba(124, 255, 203, 0.12), transparent);
+  filter: blur(72px);
+  opacity: 0.8;
+  transform: translate3d(0, calc(var(--scroll-y) * -0.06), 0) scale(1.05);
+}
+
+.scroll-background::after {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.34) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(0, 245, 255, 0.28) 1px, transparent 1.5px),
+    linear-gradient(90deg, transparent 0 48%, rgba(0, 245, 255, 0.1) 49% 51%, transparent 52% 100%);
+  background-position: 0 0, 38px 42px, center;
+  background-size: 110px 110px, 150px 150px, 320px 100%;
+  opacity: 0.22;
+  transform: translate3d(0, calc(var(--scroll-y) * -0.22), 0);
+}
+
+.starfield {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.78;
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 7px, rgba(0, 245, 255, 0.045) 8px, transparent 10px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  animation: scan-drift 9s linear infinite;
+}
+
+.beam {
+  position: absolute;
+  left: -20%;
+  width: 145%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.9), rgba(157, 78, 221, 0.75), transparent);
+  box-shadow: 0 0 24px rgba(0, 245, 255, 0.65), 0 0 48px rgba(157, 78, 221, 0.35);
+  opacity: 0.55;
+  transform: rotate(-16deg) translateX(calc(var(--scroll-progress) * 160px));
+  animation: beam-pulse 5.5s ease-in-out infinite;
+}
+
+.beam-one {
+  top: 28%;
+}
+
+.beam-two {
+  top: 68%;
+  transform: rotate(14deg) translateX(calc(var(--scroll-progress) * -180px));
+  animation-delay: -2.6s;
 }
 
 .orb {
   position: absolute;
   display: block;
-  width: 22rem;
-  height: 22rem;
+  width: 24rem;
+  height: 24rem;
   border-radius: 50%;
-  filter: blur(18px);
-  opacity: 0.5;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.12), 0) rotate(calc(var(--scroll-progress) * 180deg));
+  filter: blur(22px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--scroll-direction) * 18px), calc(var(--scroll-y) * -0.12), 0) rotate(calc(var(--scroll-progress) * 180deg));
   transition: transform 0.08s linear;
+  animation: breathe 8s ease-in-out infinite alternate;
 }
 
 .orb-one {
   top: 8%;
   left: 6%;
-  background: rgba(56, 189, 248, 0.38);
+  background: rgba(56, 189, 248, 0.42);
 }
 
 .orb-two {
   top: 42%;
   right: 5%;
-  background: rgba(168, 85, 247, 0.32);
-  transform: translate3d(0, calc(var(--scroll-y) * -0.2), 0) rotate(calc(var(--scroll-progress) * -220deg));
+  background: rgba(168, 85, 247, 0.36);
+  transform: translate3d(calc(var(--scroll-direction) * -26px), calc(var(--scroll-y) * -0.2), 0) rotate(calc(var(--scroll-progress) * -220deg));
+  animation-delay: -2s;
 }
 
 .orb-three {
   bottom: -8rem;
   left: 35%;
-  background: rgba(14, 165, 233, 0.22);
-  transform: translate3d(calc(var(--scroll-progress) * 160px), calc(var(--scroll-y) * -0.08), 0);
+  background: rgba(14, 165, 233, 0.28);
+  transform: translate3d(calc((var(--scroll-progress) * 160px) + (var(--scroll-direction) * 12px)), calc(var(--scroll-y) * -0.08), 0);
+  animation-delay: -4s;
 }
 
 .grid-overlay {
   position: absolute;
   inset: -50%;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 70px 70px;
   transform: translateY(calc(var(--scroll-y) * -0.16)) rotate(8deg);
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 75%, transparent);
+}
+
+@keyframes breathe {
+  from {
+    scale: 0.92;
+  }
+
+  to {
+    scale: 1.08;
+  }
+}
+
+@keyframes scan-drift {
+  from {
+    background-position-y: 0;
+  }
+
+  to {
+    background-position-y: 120px;
+  }
+}
+
+@keyframes beam-pulse {
+  0%, 100% {
+    opacity: 0.18;
+    filter: blur(0);
+  }
+
+  45%, 55% {
+    opacity: 0.72;
+    filter: blur(0.5px);
+  }
 }
 
 a {
@@ -149,8 +268,34 @@ a {
 }
 
 .hero-content {
+  position: relative;
   max-width: 760px;
   text-align: center;
+}
+
+.hero-content::before,
+.hero-content::after {
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-color: rgba(0, 245, 255, 0.5);
+  filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.45));
+  pointer-events: none;
+}
+
+.hero-content::before {
+  top: -2rem;
+  left: -2rem;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.hero-content::after {
+  right: -2rem;
+  bottom: -2rem;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .eyebrow {
@@ -234,10 +379,11 @@ h2 {
 
 .card-section,
 .card {
-  background: rgba(31, 41, 55, 0.8);
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.86), rgba(15, 23, 42, 0.66));
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
 }
 
 .card-section {
@@ -272,6 +418,38 @@ h2 {
 
 .card {
   padding: 1.5rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(56, 189, 248, 0.42);
+  box-shadow: 0 24px 60px rgba(56, 189, 248, 0.14);
+  transform: translateY(-6px);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, calc(36px * var(--scroll-direction)), 0) scale(0.98);
+  filter: blur(3px);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.75s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+body.scrolling-up .reveal:not(.in-view) {
+  transform: translate3d(0, -36px, 0) scale(0.98);
+}
+
+body.scrolling-down .reveal:not(.in-view) {
+  transform: translate3d(0, 36px, 0) scale(0.98);
 }
 
 .card p,
@@ -381,6 +559,27 @@ input:focus,
 textarea:focus {
   outline: 2px solid var(--primary);
   border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal.in-view {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 .form-status {
