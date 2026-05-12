@@ -1,13 +1,15 @@
 :root {
-  --bg: #0f172a;
-  --surface: #111827;
-  --card: #1f2937;
+  --bg: #050816;
+  --surface: #0b1220;
+  --card: #111827;
   --text: #f8fafc;
   --muted: #cbd5e1;
   --primary: #38bdf8;
   --primary-dark: #0284c7;
-  --border: rgba(255, 255, 255, 0.12);
-  --shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+  --accent: #a855f7;
+  --glow: #22d3ee;
+  --border: rgba(255, 255, 255, 0.14);
+  --shadow: 0 20px 50px rgba(0, 0, 0, 0.28);
 }
 
 * {
@@ -21,6 +23,7 @@ html {
 body {
   --scroll-progress: 0;
   --scroll-y: 0px;
+  --scroll-direction: 1;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--bg);
@@ -29,58 +32,108 @@ body {
   overflow-x: hidden;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(120deg, rgba(56, 189, 248, 0.08), transparent 28%, rgba(168, 85, 247, 0.09) 62%, transparent),
+    #050816;
+}
+
 .scroll-background {
   position: fixed;
   inset: 0;
   z-index: -1;
   overflow: hidden;
   background:
-    radial-gradient(circle at calc(20% + (var(--scroll-progress) * 55%)) 20%, rgba(56, 189, 248, 0.35), transparent 28%),
-    radial-gradient(circle at calc(80% - (var(--scroll-progress) * 45%)) 70%, rgba(124, 58, 237, 0.32), transparent 30%),
-    linear-gradient(135deg, #0f172a, #172554 48%, #111827);
+    radial-gradient(circle at calc(12% + (var(--scroll-progress) * 66%)) calc(16% + (var(--scroll-progress) * 18%)), rgba(34, 211, 238, 0.42), transparent 24%),
+    radial-gradient(circle at calc(88% - (var(--scroll-progress) * 58%)) calc(72% - (var(--scroll-progress) * 16%)), rgba(168, 85, 247, 0.38), transparent 30%),
+    radial-gradient(circle at 50% calc(100% - (var(--scroll-progress) * 72%)), rgba(14, 165, 233, 0.18), transparent 34%),
+    linear-gradient(135deg, #050816 0%, #0f1c3f 44%, #140f2f 74%, #020617 100%);
+}
+
+.scroll-background::before,
+.scroll-background::after {
+  content: "";
+  position: absolute;
+  inset: -25%;
+  pointer-events: none;
+}
+
+.scroll-background::before {
+  background: conic-gradient(from calc(var(--scroll-progress) * 1turn), transparent, rgba(56, 189, 248, 0.16), transparent, rgba(168, 85, 247, 0.16), transparent);
+  filter: blur(72px);
+  opacity: 0.8;
+  transform: translate3d(0, calc(var(--scroll-y) * -0.06), 0) scale(1.05);
+}
+
+.scroll-background::after {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.34) 1px, transparent 1.5px),
+    radial-gradient(circle, rgba(56, 189, 248, 0.28) 1px, transparent 1.5px);
+  background-position: 0 0, 38px 42px;
+  background-size: 110px 110px, 150px 150px;
+  opacity: 0.2;
+  transform: translate3d(0, calc(var(--scroll-y) * -0.22), 0);
 }
 
 .orb {
   position: absolute;
   display: block;
-  width: 22rem;
-  height: 22rem;
+  width: 24rem;
+  height: 24rem;
   border-radius: 50%;
-  filter: blur(18px);
-  opacity: 0.5;
-  transform: translate3d(0, calc(var(--scroll-y) * -0.12), 0) rotate(calc(var(--scroll-progress) * 180deg));
+  filter: blur(22px);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  transform: translate3d(calc(var(--scroll-direction) * 18px), calc(var(--scroll-y) * -0.12), 0) rotate(calc(var(--scroll-progress) * 180deg));
   transition: transform 0.08s linear;
+  animation: breathe 8s ease-in-out infinite alternate;
 }
 
 .orb-one {
   top: 8%;
   left: 6%;
-  background: rgba(56, 189, 248, 0.38);
+  background: rgba(56, 189, 248, 0.42);
 }
 
 .orb-two {
   top: 42%;
   right: 5%;
-  background: rgba(168, 85, 247, 0.32);
-  transform: translate3d(0, calc(var(--scroll-y) * -0.2), 0) rotate(calc(var(--scroll-progress) * -220deg));
+  background: rgba(168, 85, 247, 0.36);
+  transform: translate3d(calc(var(--scroll-direction) * -26px), calc(var(--scroll-y) * -0.2), 0) rotate(calc(var(--scroll-progress) * -220deg));
+  animation-delay: -2s;
 }
 
 .orb-three {
   bottom: -8rem;
   left: 35%;
-  background: rgba(14, 165, 233, 0.22);
-  transform: translate3d(calc(var(--scroll-progress) * 160px), calc(var(--scroll-y) * -0.08), 0);
+  background: rgba(14, 165, 233, 0.28);
+  transform: translate3d(calc((var(--scroll-progress) * 160px) + (var(--scroll-direction) * 12px)), calc(var(--scroll-y) * -0.08), 0);
+  animation-delay: -4s;
 }
 
 .grid-overlay {
   position: absolute;
   inset: -50%;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
   background-size: 70px 70px;
   transform: translateY(calc(var(--scroll-y) * -0.16)) rotate(8deg);
   mask-image: linear-gradient(to bottom, transparent, black 20%, black 75%, transparent);
+}
+
+@keyframes breathe {
+  from {
+    scale: 0.92;
+  }
+
+  to {
+    scale: 1.08;
+  }
 }
 
 a {
@@ -234,10 +287,11 @@ h2 {
 
 .card-section,
 .card {
-  background: rgba(31, 41, 55, 0.8);
+  background: linear-gradient(145deg, rgba(17, 24, 39, 0.86), rgba(15, 23, 42, 0.66));
   border: 1px solid var(--border);
   border-radius: 1.25rem;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
 }
 
 .card-section {
@@ -272,6 +326,38 @@ h2 {
 
 .card {
   padding: 1.5rem;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+.card:hover {
+  border-color: rgba(56, 189, 248, 0.42);
+  box-shadow: 0 24px 60px rgba(56, 189, 248, 0.14);
+  transform: translateY(-6px);
+}
+
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, calc(36px * var(--scroll-direction)), 0) scale(0.98);
+  filter: blur(10px);
+  transition:
+    opacity 0.75s ease,
+    transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.75s ease;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal.in-view {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  filter: blur(0);
+}
+
+body.scrolling-up .reveal:not(.in-view) {
+  transform: translate3d(0, -36px, 0) scale(0.98);
+}
+
+body.scrolling-down .reveal:not(.in-view) {
+  transform: translate3d(0, 36px, 0) scale(0.98);
 }
 
 .card p,
@@ -381,6 +467,27 @@ input:focus,
 textarea:focus {
   outline: 2px solid var(--primary);
   border-color: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal,
+  .reveal.in-view {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
 }
 
 .form-status {
