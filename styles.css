@@ -338,7 +338,7 @@ h2 {
 .reveal {
   opacity: 0;
   transform: translate3d(0, calc(36px * var(--scroll-direction)), 0) scale(0.98);
-  filter: blur(10px);
+  filter: blur(3px);
   transition:
     opacity 0.75s ease,
     transform 0.75s cubic-bezier(0.22, 1, 0.36, 1),
