@@ -3,6 +3,7 @@ const navLinks = document.querySelector('.nav-links');
 const year = document.querySelector('#year');
 const contactForm = document.querySelector('#contactForm');
 const formStatus = document.querySelector('#formStatus');
+const resumeDownloads = document.querySelectorAll('.resume-download');
 const root = document.documentElement;
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 let lastScrollY = window.scrollY;
@@ -47,6 +48,28 @@ navLinks.addEventListener('click', (event) => {
     navLinks.classList.remove('show');
     navToggle.setAttribute('aria-expanded', 'false');
   }
+});
+
+resumeDownloads.forEach((link) => {
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(link.href);
+      const resumeBlob = await response.blob();
+      const resumeUrl = URL.createObjectURL(resumeBlob);
+      const temporaryLink = document.createElement('a');
+
+      temporaryLink.href = resumeUrl;
+      temporaryLink.download = link.getAttribute('download') || 'FrancisMickuLamsin_Resume.pdf';
+      document.body.appendChild(temporaryLink);
+      temporaryLink.click();
+      temporaryLink.remove();
+      URL.revokeObjectURL(resumeUrl);
+    } catch (error) {
+      window.location.href = link.href;
+    }
+  });
 });
 
 const revealElements = document.querySelectorAll('.section, .card, .hero-content, .section-header');
