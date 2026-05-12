@@ -1,6 +1,9 @@
 :root {
   --bg: #050816;
   --surface: #0b1220;
+  --neon-cyan: #00f5ff;
+  --neon-violet: #9d4edd;
+  --neon-green: #7cffcb;
   --card: #111827;
   --text: #f8fafc;
   --muted: #cbd5e1;
@@ -48,10 +51,10 @@ body::before {
   z-index: -1;
   overflow: hidden;
   background:
-    radial-gradient(circle at calc(12% + (var(--scroll-progress) * 66%)) calc(16% + (var(--scroll-progress) * 18%)), rgba(34, 211, 238, 0.42), transparent 24%),
-    radial-gradient(circle at calc(88% - (var(--scroll-progress) * 58%)) calc(72% - (var(--scroll-progress) * 16%)), rgba(168, 85, 247, 0.38), transparent 30%),
-    radial-gradient(circle at 50% calc(100% - (var(--scroll-progress) * 72%)), rgba(14, 165, 233, 0.18), transparent 34%),
-    linear-gradient(135deg, #050816 0%, #0f1c3f 44%, #140f2f 74%, #020617 100%);
+    radial-gradient(circle at calc(12% + (var(--scroll-progress) * 66%)) calc(16% + (var(--scroll-progress) * 18%)), rgba(0, 245, 255, 0.42), transparent 24%),
+    radial-gradient(circle at calc(88% - (var(--scroll-progress) * 58%)) calc(72% - (var(--scroll-progress) * 16%)), rgba(157, 78, 221, 0.4), transparent 30%),
+    radial-gradient(circle at 50% calc(100% - (var(--scroll-progress) * 72%)), rgba(124, 255, 203, 0.16), transparent 34%),
+    linear-gradient(135deg, #020617 0%, #061530 38%, #140f2f 72%, #020617 100%);
 }
 
 .scroll-background::before,
@@ -63,7 +66,7 @@ body::before {
 }
 
 .scroll-background::before {
-  background: conic-gradient(from calc(var(--scroll-progress) * 1turn), transparent, rgba(56, 189, 248, 0.16), transparent, rgba(168, 85, 247, 0.16), transparent);
+  background: conic-gradient(from calc(var(--scroll-progress) * 1turn), transparent, rgba(0, 245, 255, 0.18), transparent, rgba(157, 78, 221, 0.18), transparent, rgba(124, 255, 203, 0.12), transparent);
   filter: blur(72px);
   opacity: 0.8;
   transform: translate3d(0, calc(var(--scroll-y) * -0.06), 0) scale(1.05);
@@ -72,11 +75,52 @@ body::before {
 .scroll-background::after {
   background-image:
     radial-gradient(circle, rgba(255, 255, 255, 0.34) 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(56, 189, 248, 0.28) 1px, transparent 1.5px);
-  background-position: 0 0, 38px 42px;
-  background-size: 110px 110px, 150px 150px;
-  opacity: 0.2;
+    radial-gradient(circle, rgba(0, 245, 255, 0.28) 1px, transparent 1.5px),
+    linear-gradient(90deg, transparent 0 48%, rgba(0, 245, 255, 0.1) 49% 51%, transparent 52% 100%);
+  background-position: 0 0, 38px 42px, center;
+  background-size: 110px 110px, 150px 150px, 320px 100%;
+  opacity: 0.22;
   transform: translate3d(0, calc(var(--scroll-y) * -0.22), 0);
+}
+
+.starfield {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.78;
+}
+
+.scanline {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, transparent 0 7px, rgba(0, 245, 255, 0.045) 8px, transparent 10px);
+  opacity: 0.42;
+  mix-blend-mode: screen;
+  animation: scan-drift 9s linear infinite;
+}
+
+.beam {
+  position: absolute;
+  left: -20%;
+  width: 145%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.9), rgba(157, 78, 221, 0.75), transparent);
+  box-shadow: 0 0 24px rgba(0, 245, 255, 0.65), 0 0 48px rgba(157, 78, 221, 0.35);
+  opacity: 0.55;
+  transform: rotate(-16deg) translateX(calc(var(--scroll-progress) * 160px));
+  animation: beam-pulse 5.5s ease-in-out infinite;
+}
+
+.beam-one {
+  top: 28%;
+}
+
+.beam-two {
+  top: 68%;
+  transform: rotate(14deg) translateX(calc(var(--scroll-progress) * -180px));
+  animation-delay: -2.6s;
 }
 
 .orb {
@@ -133,6 +177,28 @@ body::before {
 
   to {
     scale: 1.08;
+  }
+}
+
+@keyframes scan-drift {
+  from {
+    background-position-y: 0;
+  }
+
+  to {
+    background-position-y: 120px;
+  }
+}
+
+@keyframes beam-pulse {
+  0%, 100% {
+    opacity: 0.18;
+    filter: blur(0);
+  }
+
+  45%, 55% {
+    opacity: 0.72;
+    filter: blur(0.5px);
   }
 }
 
@@ -202,8 +268,34 @@ a {
 }
 
 .hero-content {
+  position: relative;
   max-width: 760px;
   text-align: center;
+}
+
+.hero-content::before,
+.hero-content::after {
+  content: "";
+  position: absolute;
+  width: 110px;
+  height: 110px;
+  border-color: rgba(0, 245, 255, 0.5);
+  filter: drop-shadow(0 0 12px rgba(0, 245, 255, 0.45));
+  pointer-events: none;
+}
+
+.hero-content::before {
+  top: -2rem;
+  left: -2rem;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.hero-content::after {
+  right: -2rem;
+  bottom: -2rem;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .eyebrow {
